@@ -3,13 +3,23 @@ package com.firrael.ifproject.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.firrael.ifproject.gameworld.GameRenderer;
+import com.firrael.ifproject.gameworld.GameWorld;
 
 /**
  * Created by firrael on 02.08.2015.
  */
 public class GameScreen implements Screen {
-
     private static final String TAG = GameScreen.class.getName();
+
+    private GameWorld world;
+    private GameRenderer renderer;
+
+    public GameScreen() {
+        world = new GameWorld();
+        renderer = new GameRenderer(world);
+    }
 
     @Override
     public void show() {
@@ -18,10 +28,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // Sets a Color to Fill the Screen with (RGB = 10, 15, 230), Opacity of 1 (100%)
-        Gdx.gl.glClearColor(10 / 255.0f, 15 / 255.0f, 230 / 255.0f, 1f);
-        // Fills the screen with the selected color
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        world.update(delta);
+        renderer.render();
+
+        Gdx.app.log(TAG + " FPS", (1 / delta) + "");
     }
 
     @Override
