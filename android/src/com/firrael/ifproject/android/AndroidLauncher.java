@@ -13,6 +13,8 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         config.hideStatusBar = true;
+		config.useAccelerometer = false;
+		config.useCompass = false;
 		initialize(new SampleGame(), config);
 	}
 }
