@@ -2,7 +2,6 @@ package com.firrael.ifproject.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.firrael.ifproject.MyGdxGame;
 import com.firrael.ifproject.SampleGame;
 
 public class DesktopLauncher {

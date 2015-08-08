@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.firrael.ifproject.MyGdxGame;
 import com.firrael.ifproject.SampleGame;
 
 public class AndroidLauncher extends AndroidApplication {

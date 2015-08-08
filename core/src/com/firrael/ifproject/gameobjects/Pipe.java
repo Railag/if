@@ -1,5 +1,6 @@
 package com.firrael.ifproject.gameobjects;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
@@ -61,6 +62,14 @@ public class Pipe extends Scrollable {
         super.reset(newX);
         // Измените высоту на случайное значение
         height = r.nextInt(90) + 15;
+    }
+
+    public boolean collides(Bird bird) {
+        return position.x < bird.getX() + bird.getWidth()
+                && (Intersector.overlaps(bird.getBoundingCircle(), barUp)
+                || Intersector.overlaps(bird.getBoundingCircle(), barDown)
+                || Intersector.overlaps(bird.getBoundingCircle(), skullUp)
+                || Intersector.overlaps(bird.getBoundingCircle(), skullDown));
     }
 
     public Rectangle getSkullUp() {
