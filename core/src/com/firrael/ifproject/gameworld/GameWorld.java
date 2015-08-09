@@ -31,7 +31,7 @@ public class GameWorld {
     }
 
     public enum GameState {
-        READY, RUNNING, GAMEOVER
+        READY, RUNNING, GAMEOVER, HIGHSCORE
     }
 
     private GameState currentState;
@@ -68,7 +68,16 @@ public class GameWorld {
             bird.die();
             bird.decelerate();
             currentState = GameState.GAMEOVER;
+
+            if (score > AssetLoader.getHighScore()) {
+                AssetLoader.setHighScore(score);
+                currentState = GameState.HIGHSCORE;
+            }
         }
+    }
+
+    public boolean isHighScore() {
+        return currentState == GameState.HIGHSCORE;
     }
 
     public void update(float delta) {
@@ -79,15 +88,15 @@ public class GameWorld {
                 break;
 
             case RUNNING:
-            default:
                 updateRunning(delta);
+                break;
+            default:
                 break;
         }
 
     }
 
     private void updateReady(float delta) {
-        // Пока что ничего не делаем
     }
 
     public void restart() {

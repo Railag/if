@@ -1,5 +1,7 @@
 package com.firrael.ifproject.zbhelpers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,6 +28,8 @@ public class AssetLoader {
     public static TextureRegion bird, birdDown, birdUp;
 
     public static TextureRegion skullUp, skullDown, bar;
+
+    public static Preferences prefs;
 
     public static void load() {
         manager = new AssetManager();
@@ -94,6 +98,21 @@ public class AssetLoader {
             shadow = manager.get("data/shadow.fnt");
             shadow.getData().setScale(.25f, -.25f);
         }
+
+        prefs = Gdx.app.getPreferences("ZombieBird");
+
+        if (!prefs.contains("highScore")) {
+            prefs.putInteger("highScore", 0);
+        }
+    }
+
+    public static void setHighScore(int val) {
+        prefs.putInteger("highScore", val);
+        prefs.flush();
+    }
+
+    public static int getHighScore() {
+        return prefs.getInteger("highScore");
     }
 
     public static void dispose() {
