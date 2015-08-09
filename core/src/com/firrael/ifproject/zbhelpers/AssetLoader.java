@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -13,6 +14,10 @@ public class AssetLoader {
     public static AssetManager manager;
 
     public static Sound dead;
+    public static Sound flap;
+    public static Sound coin;
+
+    public static BitmapFont font, shadow;
 
     public static Texture texture;
     public static TextureRegion bg, grass;
@@ -27,6 +32,11 @@ public class AssetLoader {
 
         manager.load("data/texture.png", Texture.class);
         manager.load("data/dead.wav", Sound.class);
+        manager.load("data/flap.wav", Sound.class);
+        manager.load("data/coin.wav", Sound.class);
+        manager.load("data/shadow.fnt", BitmapFont.class);
+        manager.load("data/text.fnt", BitmapFont.class);
+
         manager.finishLoadingAsset("data/texture.png");
         manager.finishLoadingAsset("data/dead.wav");
 
@@ -63,11 +73,35 @@ public class AssetLoader {
             bar.flip(false, true);
         }
 
+        manager.finishLoading();
+
         if (manager.isLoaded("data/dead.wav"))
             dead = manager.get("data/dead.wav");
+
+        if (manager.isLoaded("data/flap.wav"))
+            flap = manager.get("data/flap.wav");
+
+        if (manager.isLoaded("data/coin.wav"))
+            coin = manager.get("data/coin.wav");
+
+        if (manager.isLoaded("data/text.fnt")) {
+            font = manager.get("data/text.fnt");
+            font.getData().setScale(.25f, -.25f);
+        }
+
+
+        if (manager.isLoaded("data/shadow.fnt")) {
+            shadow = manager.get("data/shadow.fnt");
+            shadow.getData().setScale(.25f, -.25f);
+        }
     }
 
     public static void dispose() {
         texture.dispose();
+        dead.dispose();
+        flap.dispose();
+        coin.dispose();
+        font.dispose();
+        shadow.dispose();
     }
 }

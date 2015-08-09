@@ -2,16 +2,19 @@ package com.firrael.ifproject.zbhelpers;
 
 import com.badlogic.gdx.InputProcessor;
 import com.firrael.ifproject.gameobjects.Bird;
+import com.firrael.ifproject.gameworld.GameWorld;
 
 /**
  * Created by firrael on 03.08.2015.
  */
 public class InputHandler implements InputProcessor{
 
+    private GameWorld world;
     private Bird bird;
 
-    public InputHandler(Bird bird) {
-        this.bird = bird;
+    public InputHandler(GameWorld world) {
+        this.world = world;
+        bird = world.getBird();
     }
 
     @Override
@@ -31,7 +34,16 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (world.isReady()) {
+            world.start();
+        }
+
         bird.onClick();
+
+        if (world.isGameOver()) {
+            world.restart();
+        }
+
         return true;
     }
 
