@@ -3,6 +3,7 @@ package com.firrael.ifproject;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.firrael.ifproject.screens.GameScreen;
+import com.firrael.ifproject.screens.SplashScreen;
 import com.firrael.ifproject.zbhelpers.AssetLoader;
 
 /**
@@ -16,7 +17,7 @@ public class SampleGame extends Game {
     public void create() {
         Gdx.app.log(TAG, "create");
         AssetLoader.load();
-        setScreen(new GameScreen());
+        setScreen(new SplashScreen(this));
     }
 
     @Override

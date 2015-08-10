@@ -10,46 +10,52 @@ import com.firrael.ifproject.zbhelpers.AssetLoader;
  * Created by firrael on 03.08.2015.
  */
 public class GameWorld {
-    private final static String TAG = GameWorld.class.getName();
 
     private Bird bird;
-
-    private Rectangle ground;
-
     private ScrollHandler scroller;
-
-    public boolean isReady() {
-        return currentState.equals(GameState.READY);
-    }
-
-    public void start() {
-        currentState = GameState.RUNNING;
-    }
-
-    public boolean isGameOver() {
-        return currentState.equals(GameState.GAMEOVER);
-    }
-
-    public enum GameState {
-        READY, RUNNING, GAMEOVER, HIGHSCORE
-    }
+    private Rectangle ground;
+    private int score = 0;
+    private float runTime = 0;
+    private int midPointY;
 
     private GameState currentState;
 
-    private int score = 0;
-
-    public int midPointY;
+    public enum GameState {
+        MENU, READY, RUNNING, GAMEOVER, HIGHSCORE
+    }
 
     public GameWorld(int midPointY) {
+        currentState = GameState.MENU;
+        this.midPointY = midPointY;
         bird = new Bird(33, midPointY - 5, 17, 12);
         scroller = new ScrollHandler(this, midPointY + 66);
-        ground = new Rectangle(0, midPointY + 66, 136, 11);
-        currentState = GameState.READY;
-        this.midPointY = midPointY;
+        ground = new Rectangle(0, midPointY + 66, 137, 11);
+    }
+
+    public void update(float delta) {
+        runTime += delta;
+
+        switch (currentState) {
+            case READY:
+            case MENU:
+                updateReady(delta);
+                break;
+
+            case RUNNING:
+                updateRunning(delta);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void updateReady(float delta) {
+        bird.updateReady(runTime);
+        scroller.updateReady(delta);
     }
 
     public void updateRunning(float delta) {
-
         if (delta > .15f) {
             delta = .15f;
         }
@@ -76,39 +82,13 @@ public class GameWorld {
         }
     }
 
-    public boolean isHighScore() {
-        return currentState == GameState.HIGHSCORE;
-    }
-
-    public void update(float delta) {
-
-        switch (currentState) {
-            case READY:
-                updateReady(delta);
-                break;
-
-            case RUNNING:
-                updateRunning(delta);
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    private void updateReady(float delta) {
-    }
-
-    public void restart() {
-        currentState = GameState.READY;
-        score = 0;
-        bird.onRestart(midPointY - 5);
-        scroller.onRestart();
-        currentState = GameState.READY;
-    }
-
     public Bird getBird() {
         return bird;
+
+    }
+
+    public int getMidPointY() {
+        return midPointY;
     }
 
     public ScrollHandler getScroller() {
@@ -122,4 +102,41 @@ public class GameWorld {
     public void addScore(int increment) {
         score += increment;
     }
+
+    public void start() {
+        currentState = GameState.RUNNING;
+    }
+
+    public void ready() {
+        currentState = GameState.READY;
+    }
+
+    public void restart() {
+        currentState = GameState.READY;
+        score = 0;
+        bird.onRestart(midPointY - 5);
+        scroller.onRestart();
+        currentState = GameState.READY;
+    }
+
+    public boolean isReady() {
+        return currentState == GameState.READY;
+    }
+
+    public boolean isGameOver() {
+        return currentState == GameState.GAMEOVER;
+    }
+
+    public boolean isHighScore() {
+        return currentState == GameState.HIGHSCORE;
+    }
+
+    public boolean isMenu() {
+        return currentState == GameState.MENU;
+    }
+
+    public boolean isRunning() {
+        return currentState == GameState.RUNNING;
+    }
+
 }

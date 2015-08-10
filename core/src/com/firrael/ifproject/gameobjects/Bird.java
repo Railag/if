@@ -8,27 +8,29 @@ import com.firrael.ifproject.zbhelpers.AssetLoader;
  * Created by firrael on 03.08.2015.
  */
 public class Bird {
+
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 acceleration;
 
     private float rotation;
     private int width;
-    private int height;
+    private float height;
 
-    private Circle boundingCircle;
+    private float originalY;
 
     private boolean isAlive;
+
+    private Circle boundingCircle;
 
     public Bird(float x, float y, int width, int height) {
         this.width = width;
         this.height = height;
+        this.originalY = y;
         position = new Vector2(x, y);
         velocity = new Vector2(0, 0);
         acceleration = new Vector2(0, 460);
-
         boundingCircle = new Circle();
-
         isAlive = true;
     }
 
@@ -62,7 +64,13 @@ public class Bird {
             if (rotation > 90) {
                 rotation = 90;
             }
+
         }
+
+    }
+
+    public void updateReady(float runTime) {
+        position.y = 2 * (float) Math.sin(7 * runTime) + originalY;
     }
 
     public boolean isFalling() {
@@ -84,7 +92,6 @@ public class Bird {
         isAlive = false;
         velocity.y = 0;
     }
-
 
     public void decelerate() {
         acceleration.y = 0;
@@ -127,4 +134,5 @@ public class Bird {
     public boolean isAlive() {
         return isAlive;
     }
+
 }

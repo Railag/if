@@ -21,13 +21,13 @@ public class AssetLoader {
 
     public static BitmapFont font, shadow;
 
-    public static Texture texture;
-    public static TextureRegion bg, grass;
+    public static Texture texture, logoTexture;
+
+    public static TextureRegion logo, zbLogo, bg, grass, bird, birdDown,
+            birdUp, skullUp, skullDown, bar, playButtonUp, playButtonDown;
 
     public static Animation birdAnimation;
-    public static TextureRegion bird, birdDown, birdUp;
 
-    public static TextureRegion skullUp, skullDown, bar;
 
     public static Preferences prefs;
 
@@ -35,6 +35,7 @@ public class AssetLoader {
         manager = new AssetManager();
 
         manager.load("data/texture.png", Texture.class);
+        manager.load("data/logo.png", Texture.class);
         manager.load("data/dead.wav", Sound.class);
         manager.load("data/flap.wav", Sound.class);
         manager.load("data/coin.wav", Sound.class);
@@ -42,12 +43,26 @@ public class AssetLoader {
         manager.load("data/text.fnt", BitmapFont.class);
 
         manager.finishLoadingAsset("data/texture.png");
+        manager.finishLoadingAsset("data/logo.png");
         manager.finishLoadingAsset("data/dead.wav");
 
         if (manager.isLoaded("data/texture.png")) {
             texture = manager.get("data/texture.png", Texture.class);
 
             texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+            logoTexture = manager.get("data/logo.png", Texture.class);
+            logoTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            logo = new TextureRegion(logoTexture, 0, 0, 512, 114);
+
+            playButtonUp = new TextureRegion(texture, 0, 83, 29, 16);
+            playButtonDown = new TextureRegion(texture, 29, 83, 29, 16);
+            playButtonUp.flip(false, true);
+            playButtonDown.flip(false, true);
+
+            zbLogo = new TextureRegion(texture, 0, 55, 135, 24);
+            zbLogo.flip(false, true);
 
             bg = new TextureRegion(texture, 0, 0, 136, 43);
             bg.flip(false, true);
@@ -116,10 +131,13 @@ public class AssetLoader {
     }
 
     public static void dispose() {
+        logoTexture.dispose();
         texture.dispose();
+
         dead.dispose();
         flap.dispose();
         coin.dispose();
+
         font.dispose();
         shadow.dispose();
     }

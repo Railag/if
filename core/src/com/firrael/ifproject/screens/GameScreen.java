@@ -12,62 +12,53 @@ import com.firrael.ifproject.zbhelpers.InputHandler;
  * Created by firrael on 02.08.2015.
  */
 public class GameScreen implements Screen {
-    private static final String TAG = GameScreen.class.getName();
 
     private GameWorld world;
     private GameRenderer renderer;
-
-    private float runtime = 0;
+    private float runTime;
 
     public GameScreen() {
+
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
         float gameWidth = 136;
         float gameHeight = screenHeight / (screenWidth / gameWidth);
-
         int midPointY = (int) (gameHeight / 2);
 
         world = new GameWorld(midPointY);
+        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));
         renderer = new GameRenderer(world, (int) gameHeight, midPointY);
-
-        Gdx.input.setInputProcessor(new InputHandler(world));
-
-    }
-
-    @Override
-    public void show() {
-        Gdx.app.log(TAG, "show");
     }
 
     @Override
     public void render(float delta) {
-        runtime += delta;
+        runTime += delta;
         world.update(delta);
-        renderer.render(runtime);
+        renderer.render(delta, runTime);
     }
 
     @Override
     public void resize(int width, int height) {
-        Gdx.app.log(TAG, "resize");
     }
 
     @Override
-    public void pause() {
-        Gdx.app.log(TAG, "pause");
-    }
-
-    @Override
-    public void resume() {
-        Gdx.app.log(TAG, "resume");
+    public void show() {
     }
 
     @Override
     public void hide() {
-        Gdx.app.log(TAG, "hide");
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
     }
 
     @Override
     public void dispose() {
-        Gdx.app.log(TAG, "dispose");
     }
+
 }
