@@ -1,6 +1,7 @@
 package com.firrael.ifproject.zbhelpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -131,6 +132,8 @@ public class AssetLoader {
     }
 
     public static void dispose() {
+        manager.dispose();
+
         logoTexture.dispose();
         texture.dispose();
 

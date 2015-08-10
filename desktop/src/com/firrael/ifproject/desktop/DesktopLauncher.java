@@ -8,8 +8,11 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Zombie Bird";
-        config.width = 900;
-        config.height = 1200;
+        config.width = 1024;
+        config.height = 768;
+		config.fullscreen = true;
+		config.vSyncEnabled = true;
+
 		new LwjglApplication(new SampleGame(), config);
 	}
 }
