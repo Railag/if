@@ -3,8 +3,6 @@ package com.firrael.ifproject.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.firrael.ifproject.gameworld.GameRenderer;
 import com.firrael.ifproject.gameworld.GameWorld;
 import com.firrael.ifproject.zbhelpers.InputHandler;
@@ -28,13 +26,9 @@ public class GameScreen implements Screen {
         Graphics.DisplayMode displayMode = null;
         Graphics.DisplayMode[] modes = graphics.getDisplayModes();
 
-        for (int i = 0; i < modes.length; i++)
-        {
-            if (modes[i].width == screenWidth
-                    && modes[i].height == screenHeight)
-            {
-                displayMode = modes[i];
-            }
+        for (Graphics.DisplayMode mode : modes) {
+            if (mode.width == screenWidth && mode.height == screenHeight)
+                displayMode = mode;
         }
         //graphics.setDisplayMode(graphics.getDesktopDisplayMode().width, graphics.getDesktopDisplayMode().height, true);
         graphics.setDisplayMode(displayMode);
