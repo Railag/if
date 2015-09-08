@@ -51,16 +51,17 @@ public class MyGdxGame extends ApplicationAdapter {
         Gdx.input.setInputProcessor(camController);
 
         assets = new AssetManager();
-        assets.load("data/ship.obj", Model.class);
+        assets.load("data/ship.g3db", Model.class);
         loading = true;
     }
 
     private void doneLoading() {
-        Model ship = assets.get("data/ship.obj", Model.class);
+        Model ship = assets.get("data/ship.g3db", Model.class);
         for (float x = -5f; x <= 5f; x += 2f) {
             for (float z = -5f; z <= 5f; z += 2f) {
                 ModelInstance shipInstance = new ModelInstance(ship);
-                shipInstance.transform.setToTranslation(x, 0, z);
+                shipInstance.transform.setToRotation(x, 0, z, 90);
+                //shipInstance.transform.setToTranslation(x, 0, z);
                 instances.add(shipInstance);
             }
         }
